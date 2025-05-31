@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -5,17 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>INFORMÁTICA 10-A-B👨‍💻</title>
   <link rel="icon" href="https://www.youtube.com/s/desktop/587bdee7/img/favicon_144x144.png" />
-
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      padding: 0;
+      padding: 30px 20px;
       font-family: 'Roboto', sans-serif;
       background-color: #0f0f0f;
       color: #fff;
@@ -23,21 +20,19 @@
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
-      padding: 30px 20px;
     }
 
     h1.titulo-escola {
       color: #ff0000;
       font-size: 1.8rem;
-      margin-bottom: 6px;
       text-align: center;
+      margin-bottom: 6px;
     }
 
     h2.subtitulo {
       color: #aaa;
-      font-weight: 400;
       font-size: 1.2rem;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
       text-align: center;
     }
 
@@ -45,33 +40,23 @@
       background-color: #181818;
       border-radius: 12px;
       padding: 30px;
-      max-width: 400px;
+      max-width: 500px;
       width: 100%;
-      animation: rgbPulse 4s infinite;
+      animation: rgbPulse 5s infinite;
     }
 
     @keyframes rgbPulse {
-      0% {
-        box-shadow: 0 0 12px 2px #ff1a1a;
-      }
-      25% {
-        box-shadow: 0 0 14px 2px #00ff00;
-      }
-      50% {
-        box-shadow: 0 0 16px 3px #1a8cff;
-      }
-      75% {
-        box-shadow: 0 0 18px 3px #cc00ff;
-      }
-      100% {
-        box-shadow: 0 0 12px 2px #ff1a1a;
-      }
+      0%   { box-shadow: 0 0 12px 2px #ff1a1a; }
+      25%  { box-shadow: 0 0 14px 2px #00ff00; }
+      50%  { box-shadow: 0 0 16px 3px #1a8cff; }
+      75%  { box-shadow: 0 0 18px 3px #cc00ff; }
+      100% { box-shadow: 0 0 12px 2px #ff1a1a; }
     }
 
-    input {
+    input, select {
       width: 100%;
-      padding: 14px;
-      margin-bottom: 18px;
+      padding: 12px;
+      margin-bottom: 16px;
       background: #121212;
       color: #fff;
       border: 1.5px solid #333;
@@ -79,11 +64,7 @@
       font-size: 1rem;
     }
 
-    input::placeholder {
-      color: #888;
-    }
-
-    input:focus {
+    input:focus, select:focus {
       outline: none;
       border-color: #ff0000;
       box-shadow: 0 0 6px #ff0000;
@@ -99,7 +80,7 @@
       font-size: 1rem;
       font-weight: bold;
       cursor: pointer;
-      transition: background-color 0.25s ease;
+      margin-bottom: 12px;
     }
 
     button:hover {
@@ -107,15 +88,13 @@
     }
 
     #resultado {
-      margin-top: 25px;
+      margin-top: 20px;
       padding: 16px;
       background-color: #222;
       border-radius: 10px;
       text-align: center;
-      font-size: 1.15rem;
-      white-space: pre-line;
-      color: #fff;
-      animation: rgbPulse 4s infinite;
+      font-size: 1.1rem;
+      animation: rgbPulse 5s infinite;
     }
 
     footer {
@@ -129,14 +108,35 @@
 <body>
 
   <h1 class="titulo-escola">INSTITUTO MÉDIO POLITÉCNICO N°55</h1>
-  <h2 class="subtitulo">Calculadora de Média</h2>
+  <h2 class="subtitulo">Calculadora de Média por Disciplina</h2>
 
   <div class="card">
     <input type="text" id="nome" placeholder="Nome do aluno" />
+
+    <select id="disciplina">
+      <option value="" disabled selected>Seleciona a disciplina</option>
+      <option>TIC</option>
+      <option>LÍNGUA PORTUGUESA</option>
+      <option>MATEMÁTICA</option>
+      <option>FÍSICA</option>
+      <option>INGLÊS</option>
+      <option>SEAC</option>
+      <option>TLP</option>
+      <option>ELETROTÉCNIA</option>
+      <option>EDUCAÇÃO FÍSICA</option>
+      <option>FAI</option>
+      <option>EMPREENDEDORISMO</option>
+      <option>QUÍMICA</option>
+    </select>
+
     <input type="number" id="nota1" placeholder="Nota 1º Trimestre" min="0" max="20" step="0.1" />
     <input type="number" id="nota2" placeholder="Nota 2º Trimestre" min="0" max="20" step="0.1" />
     <input type="number" id="nota3" placeholder="Nota 3º Trimestre" min="0" max="20" step="0.1" />
-    <button onclick="calcularMedia()">Calcular Média</button>
+
+    <button onclick="calcularDisciplina()">Calcular Média da Disciplina</button>
+    <button onclick="calcularGeral()">Calcular Média Geral</button>
+    <button onclick="baixarResultado()">Baixar Resultado</button>
+
     <div id="resultado"></div>
   </div>
 
@@ -146,7 +146,39 @@
   </footer>
 
   <script>
-    function calcularMedia() {
+    let resultadosTexto = "";
+
+    function calcularDisciplina() {
+      const nome = document.getElementById("nome").value.trim();
+      const disciplina = document.getElementById("disciplina").value;
+      const n1 = parseFloat(document.getElementById("nota1").value);
+      const n2 = parseFloat(document.getElementById("nota2").value);
+      const n3 = parseFloat(document.getElementById("nota3").value);
+      const res = document.getElementById("resultado");
+
+      if (!nome || !disciplina || isNaN(n1) || isNaN(n2) || isNaN(n3)) {
+        res.textContent = "⚠️ Preencha todos os campos corretamente!";
+        res.style.color = "#ff4444";
+        return;
+      }
+
+      const media = (n1 + n2 + n3) / 3;
+      let status = "";
+
+      if (media >= 10) {
+        status = "✅ Apto, vais continuar a sofrer aqui no inferno.";
+      } else if (media >= 7) {
+        status = "🟡 Carrega, te salvou o professor.";
+      } else {
+        status = "❌ Não apto, décima não acaba. Próximo ano tem mais.";
+      }
+
+      const msg = `${nome} | ${disciplina}\nMédia: ${media.toFixed(2)}\n${status}`;
+      res.innerText = msg;
+      resultadosTexto = msg;
+    }
+
+    function calcularGeral() {
       const nome = document.getElementById("nome").value.trim();
       const n1 = parseFloat(document.getElementById("nota1").value);
       const n2 = parseFloat(document.getElementById("nota2").value);
@@ -159,21 +191,34 @@
         return;
       }
 
-      const media = (n1 + n2 + n3) / 3;
-      let status = "";
+      const disciplinas = 12;
+      const media = (n1 + n2 + n3) / 3; // média de uma disciplina
+      const mediaGeral = media; // aqui pode ser substituído por um array no futuro
 
-      if (media === 9) {
-        status = "🤞 Se te votarem tipo vás aprovar";
-      } else if (media >= 10) {
+      let status = "";
+      if (mediaGeral >= 10) {
         status = "✅ Apto, vais continuar a sofrer aqui no inferno.";
+      } else if (mediaGeral >= 7) {
+        status = "🟡 Carrega, te salvou o professor.";
       } else {
-        status = "❌ Não apto, décima não acaba. Próximo tem mais.";
+        status = "❌ Não apto, décima não acaba. Próximo ano tem mais.";
       }
 
-      res.style.color = "#fff";
-      res.innerHTML = `${nome}, sua média é: <strong>${media.toFixed(2)}</strong><br>${status}`;
+      const msg = `${nome} | Média Geral do Ano: ${mediaGeral.toFixed(2)}\n${status}`;
+      res.innerText = msg;
+      resultadosTexto = msg;
+    }
+
+    function baixarResultado() {
+      if (!resultadosTexto) return alert("⚠️ Nenhum resultado disponível.");
+      const blob = new Blob([resultadosTexto], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "resultado.txt";
+      a.click();
+      URL.revokeObjectURL(url);
     }
   </script>
-
 </body>
 </html>
