@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>INFORMÁTICA 10-A-B👨‍💻</title>
+  <link rel="icon" href="https://www.youtube.com/s/desktop/587bdee7/img/favicon_144x144.png" />
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #0f0f0f;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 30px 20px;
+    }
+
+    h1.titulo-escola {
+      color: #ff0000;
+      font-size: 1.8rem;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+
+    h2.subtitulo {
+      color: #aaa;
+      font-weight: 400;
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .card {
+      background-color: #181818;
+      border-radius: 12px;
+      padding: 30px;
+      max-width: 400px;
+      width: 100%;
+      animation: rgbPulse 4s infinite;
+    }
+
+    @keyframes rgbPulse {
+      0% {
+        box-shadow: 0 0 12px 2px #ff1a1a;
+      }
+      25% {
+        box-shadow: 0 0 14px 2px #00ff00;
+      }
+      50% {
+        box-shadow: 0 0 16px 3px #1a8cff;
+      }
+      75% {
+        box-shadow: 0 0 18px 3px #cc00ff;
+      }
+      100% {
+        box-shadow: 0 0 12px 2px #ff1a1a;
+      }
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 18px;
+      background: #121212;
+      color: #fff;
+      border: 1.5px solid #333;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    input::placeholder {
+      color: #888;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #ff0000;
+      box-shadow: 0 0 6px #ff0000;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background-color: #ff0000;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.25s ease;
+    }
+
+    button:hover {
+      background-color: #cc0000;
+    }
+
+    #resultado {
+      margin-top: 25px;
+      padding: 16px;
+      background-color: #222;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 1.15rem;
+      white-space: pre-line;
+      color: #fff;
+      animation: rgbPulse 4s infinite;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #777;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="titulo-escola">INSTITUTO MÉDIO POLITÉCNICO N°55</h1>
+  <h2 class="subtitulo">Calculadora de Média</h2>
+
+  <div class="card">
+    <input type="text" id="nome" placeholder="Nome do aluno" />
+    <input type="number" id="nota1" placeholder="Nota 1º Trimestre" min="0" max="20" step="0.1" />
+    <input type="number" id="nota2" placeholder="Nota 2º Trimestre" min="0" max="20" step="0.1" />
+    <input type="number" id="nota3" placeholder="Nota 3º Trimestre" min="0" max="20" step="0.1" />
+    <button onclick="calcularMedia()">Calcular Média</button>
+    <div id="resultado"></div>
+  </div>
+
+  <footer>
+    Feito por <strong>nobru-hacker</strong> • INFORMÁTICA 10-A-B 👨‍💻<br>
+    © Alécio Chilumbu 10A
+  </footer>
+
+  <script>
+    function calcularMedia() {
+      const nome = document.getElementById("nome").value.trim();
+      const n1 = parseFloat(document.getElementById("nota1").value);
+      const n2 = parseFloat(document.getElementById("nota2").value);
+      const n3 = parseFloat(document.getElementById("nota3").value);
+      const res = document.getElementById("resultado");
+
+      if (!nome || isNaN(n1) || isNaN(n2) || isNaN(n3)) {
+        res.textContent = "⚠️ Preencha todos os campos corretamente!";
+        res.style.color = "#ff4444";
+        return;
+      }
+
+      const media = (n1 + n2 + n3) / 3;
+      let status = "";
+
+      if (media === 9) {
+        status = "🤞 Se te votarem tipo vás aprovar";
+      } else if (media >= 10) {
+        status = "✅ Apto, vais continuar a sofrer aqui no inferno.";
+      } else {
+        status = "❌ Não apto, décima não acaba. Próximo tem mais.";
+      }
+
+      res.style.color = "#fff";
+      res.innerHTML = `${nome}, sua média é: <strong>${media.toFixed(2)}</strong><br>${status}`;
+    }
+  </script>
+
+</body>
+</html>
